@@ -6,7 +6,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 const db = require("./models");
 const { response } = require('express');
+const methodOverride = require('method-override')
 
+app.use(methodOverride('_method'))
 app.use(require('morgan')('dev'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
@@ -36,6 +38,15 @@ app.post('/pokemon', (req, res)=>{
     console.log("Created: ", poke.names);
     res.redirect('/pokemon')
   });
+})
+
+app.delete('/pokemon/:id', (req, res)=>{
+  //res.send(`trying to delete this favorite ${req.params.id}`)
+  //console.log('trying to delete this')
+  db.pokemon.destroy({
+    where:{id:req.params.id}
+  })
+  res.redirect('/')
 })
 
 app.get('/pokemon/:id', (req, res)=>{
