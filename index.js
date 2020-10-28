@@ -46,7 +46,7 @@ app.delete('/pokemon/:id', (req, res)=>{
   db.pokemon.destroy({
     where:{id:req.params.id}
   })
-  res.redirect('/')
+  res.redirect('/pokemon')
 })
 
 app.get('/pokemon/:id', (req, res)=>{
